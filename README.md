@@ -1,8 +1,42 @@
 ![](../../workflows/gds/badge.svg) ![](../../workflows/docs/badge.svg) ![](../../workflows/test/badge.svg) ![](../../workflows/fpga/badge.svg)
 
-# Tiny Tapeout Verilog Project Template
+# Audio Transient Shaper
+
+This project implements a real-time audio transient shaper for Tiny Tapeout. It enhances or reduces the attack and sustain portions of audio signals using envelope-based processing.
 
 - [Read the documentation for project](docs/info.md)
+
+## How it works
+
+The transient shaper processes audio in real-time by:
+
+1. **Dual Envelope Detection**: Uses separate fast and slow envelope followers to track signal dynamics
+2. **Attack Enhancement**: Boosts the initial transient portion of audio signals when enabled
+3. **Sustain Modulation**: Separately controls the sustained portion of the signal
+4. **Real-time Processing**: Operates at 24MHz for low-latency audio processing
+
+## Interface
+
+- **Input**: 6-bit audio input + 2 control bits (attack enable, sustain enable)
+- **Output**: 8-bit processed audio output
+- **Clock**: 24MHz
+- **Reset**: Active-low asynchronous reset
+
+### Pin Configuration
+
+- `ui_in[5:0]`: Audio input (6-bit unsigned)
+- `ui_in[6]`: Sustain amount control
+- `ui_in[7]`: Attack amount control
+- `uo_out[7:0]`: Processed audio output (8-bit)
+
+## Testing
+
+The design includes comprehensive testbenches for simulation. Run tests with:
+
+```bash
+cd test
+make
+```
 
 ## What is Tiny Tapeout?
 
@@ -10,18 +44,15 @@ Tiny Tapeout is an educational project that aims to make it easier and cheaper t
 
 To learn more and get started, visit https://tinytapeout.com.
 
-## Set up your Verilog project
+## Technical Details
 
-1. Add your Verilog files to the `src` folder.
-2. Edit the [info.yaml](info.yaml) and update information about your project, paying special attention to the `source_files` and `top_module` properties. If you are upgrading an existing Tiny Tapeout project, check out our [online info.yaml migration tool](https://tinytapeout.github.io/tt-yaml-upgrade-tool/).
-3. Edit [docs/info.md](docs/info.md) and add a description of your project.
-4. Adapt the testbench to your design. See [test/README.md](test/README.md) for more information.
+- **Platform**: Tiny Tapeout (digital ASIC)
+- **Tile size**: 1
+- **Technology**: SKY130
+- **Clock frequency**: 24MHz
+- **Signal path**: All-digital processing
 
-The GitHub action will automatically build the ASIC files using [LibreLane](https://www.zerotoasiccourse.com/terminology/librelane/).
-
-## Enable GitHub actions to build the results page
-
-- [Enabling GitHub Pages](https://tinytapeout.com/faq/#my-github-action-is-failing-on-the-pages-part)
+This is the first-ever transient shaper chip submitted to Tiny Tapeout, implementing classic audio dynamics processing in a compact digital design.
 
 ## Resources
 
@@ -31,12 +62,10 @@ The GitHub action will automatically build the ASIC files using [LibreLane](http
 - [Join the community](https://tinytapeout.com/discord)
 - [Build your design locally](https://www.tinytapeout.com/guides/local-hardening/)
 
-## What next?
+## Author
 
-- [Submit your design to the next shuttle](https://app.tinytapeout.com/).
-- Edit [this README](README.md) and explain your design, how it works, and how to test it.
-- Share your project on your social network of choice:
-  - LinkedIn [#tinytapeout](https://www.linkedin.com/search/results/content/?keywords=%23tinytapeout) [@TinyTapeout](https://www.linkedin.com/company/100708654/)
-  - Mastodon [#tinytapeout](https://chaos.social/tags/tinytapeout) [@matthewvenn](https://chaos.social/@matthewvenn)
-  - X (formerly Twitter) [#tinytapeout](https://twitter.com/hashtag/tinytapeout) [@tinytapeout](https://twitter.com/tinytapeout)
-  - Bluesky [@tinytapeout.com](https://bsky.app/profile/tinytapeout.com)
+Mark Renker
+
+## License
+
+Licensed under Apache-2.0

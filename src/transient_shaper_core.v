@@ -11,6 +11,7 @@ module transient_shaper_core #(
 );
 
     reg [WIDTH-1:0] fast_env = 0, slow_env = 0;
+    reg signed [WIDTH:0] attack_boost, sustain_boost;
 
     // Envelope followers
     always @(posedge clk or negedge rst_n) begin
@@ -25,11 +26,14 @@ module transient_shaper_core #(
 
     // Attack/Sustain mix mod
     always @(posedge clk or negedge rst_n) begin
-        if (!rst_n) audio_out <= 0;
+        if (!rst_n) begin
+            audio_out <= 0;
+            attack_boost <= 0;
+            sustain_boost <= 0;
+        end
         else if (ena) begin
-            reg signed [WIDTH:0] attack_boost, sustain_boost;
-            attack_boost = attack_amt ? (fast_env >> 1) : 0;
-            sustain_boost = sustain_amt ? (slow_env >> 1) : 0;
+            attack_boost <= attack_amt ? (fast_env >> 1) : 0;
+            sustain_boost <= sustain_amt ? (slow_env >> 1) : 0;
             audio_out <= audio_in + attack_boost + sustain_boost;
         end
     end

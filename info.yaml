@@ -1,13 +1,43 @@
+yaml_version: 6
+
 project:
   title: "Audio Transient Shaper"
   author: "Mark Renker"
   description: "Real-time transient shaper: enhances/reduces attack/sustain by envelope modulation"
+  language: "Verilog"
+  clock_hz: 24000000
+  tiles: "1x1"
   top_module: "tt_um_markr_transientshaper"
-  version: "v1.0"
-  tile_size: "1"
-  ioin: "ui_in"
-  ioout: "uo_out"
-  analog: "none"
-  github: "https://github.com/mark-renker/transient_shaper"
-  testbench: "tb.v"
+  source_files:
+    - tt_um_markr_transientshaper.v
+    - transient_shaper_core.v
+
+pinout:
+  ui:
+    - audio_in[0]
+    - audio_in[1]
+    - audio_in[2]
+    - audio_in[3]
+    - audio_in[4]
+    - audio_in[5]
+    - sustain_amt
+    - attack_amt
+  uo:
+    - audio_out[0]
+    - audio_out[1]
+    - audio_out[2]
+    - audio_out[3]
+    - audio_out[4]
+    - audio_out[5]
+    - audio_out[6]
+    - audio_out[7]
+  uio:
+    - none
+    - none
+    - none
+    - none
+    - none
+    - none
+    - none
+    - none
 

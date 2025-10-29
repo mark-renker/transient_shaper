@@ -1,0 +1,15 @@
+# SymbiYosys build artifacts
+*_bmc/
+*_prove/
+*_cover/
+simple_bmc/
+simple_cover/
+transient_shaper_bmc/
+transient_shaper_cover/
+transient_shaper_prove/
+
+# VCD waveform files (optional - uncomment if you don't want to commit them)
+# *.vcd
+
+# SQLite status databases
+*.sqlite
